@@ -1,4 +1,12 @@
 host:
   rpm:
     build:
+<<<<<<< HEAD
     - rpm-build/SPECS/securedrop-workstation-keyring.spec
+=======
+    - rpm_spec/skeleton-dom0.spec
+vm:
+  rpm:
+    build:
+    - rpm_spec/skeleton-vm.spec
+>>>>>>> 39d0c9d (Add .gitlab-ci and .qubesbuilder)
