@@ -1,3 +1,6 @@
+# upstream
+pkgs
+
 # tarball directory used before build stage 
 src/
  
