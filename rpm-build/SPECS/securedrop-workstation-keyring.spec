@@ -1,6 +1,6 @@
 Name:		securedrop-workstation-keyring
-Version:    @VERSION@
-Release:    @REL@%{?dist}
+Version:    0.1.0
+Release:    1%{?dist}
 Summary:	SecureDrop Workstation Keyring
 
 # For reproducible builds:
@@ -58,6 +58,10 @@ install -m 644 %{_builddir}/files/securedrop-release-signing-pubkey-2021.asc %{b
 
 %post
 # TODO
+# If installing: import key
+# If upgrading: remove key from rpm and reimport key
+# If removing: remove key from rpm
 
 %changelog
-# TODO
+* Mon Dec 2 2024 13:12:00 SecureDrop Team <securedrop@freedom.press> - 0.1.0
+- Initial keyring/bootstrap package
