@@ -1,6 +1,6 @@
 Name:		securedrop-workstation-keyring
-Version:	0.1.0
-Release:	1%{?dist}
+Version:    0.1.0
+Release:    1%{?dist}
 Summary:	SecureDrop Workstation Keyring
 
 # For reproducible builds:
@@ -33,6 +33,8 @@ Source:		%{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch:		noarch
 #BuildRequires:	systemd-rpm-macros
+BuildRequires: make
+
 
 %description
 This package contains the SecureDrop Release public key and yum .repo file
@@ -55,10 +57,22 @@ install -m 644 %{_builddir}/files/securedrop-release-signing-pubkey-2021.asc %{b
 /etc/yum.repos.d/securedrop-workstation-dom0.repo
 
 %post
-# Not just `rpm --import`, because of https://github.com/rpm-software-management/rpm/issues/2577
-key_id=$(rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep SecureDrop | cut -f1 -d' ')
-rpm -e $key_id
-sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-securedrop-workstation
+# New install
+if [ $1 -eq 1 ] ; then
+    systemd-run --on-active=2min rpm --import /etc/pki/rpm-gpg/RPM-GPG-securedrop-workstation ||:
+fi
+# Upgrade. Uninstall old key then install new key
+if [ $1 -gt 1 ] ; then
+    systemd-run --on-active=2min rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep 'SecureDrop Release Signing Key' | cut -f1 | xargs sudo rpm -e ||:
+    systemd-run --on-active=2min rpm --import /etc/pki/rpm-gpg/RPM-GPG-securedrop-workstation ||:
+fi
+
+%posttrans
+# Uninstall
+if [ $1 -eq 0 ] ; then
+    systemd-run --on-active=2min rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep 'SecureDrop Release Signing Key' | cut -f1 | xargs sudo rpm -e ||:
+fi
 
 %changelog
-# TODO
+* Mon Dec 2 2024 13:12:00 SecureDrop Team <securedrop@freedom.press> - 0.1.0
+- Initial keyring/bootstrap package
