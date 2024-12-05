@@ -6,13 +6,8 @@ set -o pipefail
 
 source "$(dirname "$0")/common.sh"
 
-# Prepare tarball for rpmbuild
-mkdir -p src/
-git clean -fdX rpm-build/ src/
-tar -zcvf src/"${PROJECT}"-"$(cat VERSION)".tar.gz files/
-
-# Place tarball where rpmbuild will find it
-cp src/*.tar.gz rpm-build/SOURCES/
+# There is no build step, so we can omit the tarball
+# step that is used in the sdw config rpm
 
 rpmbuild \
     --quiet \
