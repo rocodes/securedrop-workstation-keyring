@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "securedrop-workstation-keyring"
+version = "0.0.0"
+description = ""
+authors = ["SecureDrop Team"]
+license = "AGPLv3+"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[package.extras]
+install-types = ["pip"]
