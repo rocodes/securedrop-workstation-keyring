@@ -56,10 +56,21 @@ install -m 644 %{_builddir}/files/securedrop-release-signing-pubkey-2021.asc %{b
 /etc/yum.repos.d/securedrop-workstation-dom0.repo
 
 %post
-# TODO
-# If installing: import key
-# If upgrading: remove key from rpm and reimport key
-# If removing: remove key from rpm
+# New install
+if [ $1 -eq 1 ] ; then
+    systemd-run --on-active=2min rpm --import /etc/pki/rpm-gpg/RPM-GPG-securedrop-workstation ||:
+fi
+# Upgrade. Uninstall old key then install new key
+if [ $1 -gt 1 ] ; then
+    systemd-run --on-active=2min rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep 'SecureDrop Release Signing Key' | cut -f1 | xargs sudo rpm -e ||:
+    systemd-run --on-active=2min rpm --import /etc/pki/rpm-gpg/RPM-GPG-securedrop-workstation ||:
+fi
+
+%posttrans
+# Uninstall
+if [ $1 -eq 0 ] ; then
+    systemd-run --on-active=2min rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep 'SecureDrop Release Signing Key' | cut -f1 | xargs sudo rpm -e ||:
+fi
 
 %changelog
 * Mon Dec 2 2024 13:12:00 SecureDrop Team <securedrop@freedom.press> - 0.1.0
