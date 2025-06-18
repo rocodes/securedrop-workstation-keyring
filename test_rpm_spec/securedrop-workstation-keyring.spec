@@ -1,7 +1,7 @@
 Name:       securedrop-workstation-keyring
 Version:    0.1.0
 Release:    1%{?dist}
-Summary:	SecureDrop Workstation Keyring (TESTING)
+Summary:    SecureDrop Workstation Keyring (TESTING)
 
 # For reproducible builds:
 #
@@ -25,16 +25,16 @@ Summary:	SecureDrop Workstation Keyring (TESTING)
 # root policy.
 %undefine py_auto_byte_compile
 
-License:	AGPLv3
-URL:		https://github.com/freedomofpress/securedrop-workstation-keyring
+License:    AGPLv3
+URL:        https://github.com/freedomofpress/securedrop-workstation-keyring
 
-BuildArch:		noarch
+BuildArch:  noarch
 
 %package staging
-Summary:	SecureDrop Workstation Keyring (STAGING)
+Summary:    SecureDrop Workstation Keyring (STAGING)
 
 %package dev
-Summary:	SecureDrop Workstation Keyring (NIGHTLY)
+Summary:    SecureDrop Workstation Keyring (NIGHTLY)
 
 %description
 
@@ -45,6 +45,9 @@ This package contains the SecureDrop Test public key and .repo file used to boot
 This package contains the SecureDrop Test public key and .repo file
 used to bootstrap a dev version (yum-test.securedrop.org nightly builds)
 of the securedrop-workstation-dom0-config RPM.
+
+%prep
+# No prep necessary
 
 %build
 # No building necessary

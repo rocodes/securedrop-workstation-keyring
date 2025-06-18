@@ -1,7 +1,7 @@
 Name:       securedrop-workstation-keyring
 Version:    0.1.0
 Release:    1%{?dist}
-Summary:	SecureDrop Workstation Keyring
+Summary:    SecureDrop Workstation Keyring
 
 # For reproducible builds:
 #
@@ -25,16 +25,16 @@ Summary:	SecureDrop Workstation Keyring
 # root policy.
 %undefine py_auto_byte_compile
 
-License:	AGPLv3
-URL:		https://github.com/freedomofpress/securedrop-workstation-keyring
-Source:		%{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-# See: https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_troublesome_urls
+License:    AGPLv3
+URL:        https://github.com/freedomofpress/securedrop-workstation-keyring
 
-BuildArch:		noarch
+BuildArch:  noarch
 
 %description
-This package contains the SecureDrop Release public key and yum .repo file
-used to bootstrap installation of SecureDrop Workstation.
+This package contains the SecureDrop Release Signing Key and .repo file used to bootstrap installation of SecureDrop Workstation.
+
+%prep
+# No prep necessary
 
 %build
 # No building necessary
