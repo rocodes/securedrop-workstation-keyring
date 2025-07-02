@@ -27,7 +27,7 @@ Summary:	SecureDrop Workstation Keyring
 
 License:	AGPLv3
 URL:		https://github.com/freedomofpress/securedrop-workstation-keyring
-Source:		%{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+#Source:		%{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # See: https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_troublesome_urls
 
 BuildArch:		noarch
@@ -37,7 +37,11 @@ This package contains the SecureDrop Release public key and yum .repo file
 used to bootstrap installation of SecureDrop Workstation.
 
 %prep
-%setup -q
+rm -rf %{_builddir}/%{name}-%{version} ||:
+#mkdir -p %{_builddir}/%{name}-%{version}
+cp -r %{_topdir}/../files %{_builddir}/%{name}-%{version}
+
+cd %{_builddir}/%{name}-%{version}
 
 %build
 # No building necessary
