@@ -29,12 +29,17 @@ License:    AGPLv3
 URL:        https://github.com/freedomofpress/securedrop-workstation-keyring
 
 BuildArch:  noarch
+BuildRequires:  make
+Requires:   python%{python3_pkgversion}
+Requires:   git
+
+Source0: %{name}-%{version}.tar.gz
 
 %description
 This package contains the SecureDrop Release Signing Key and .repo file used to bootstrap installation of SecureDrop Workstation.
 
 %prep
-# No prep necessary
+%setup -q
 
 %build
 # No building necessary
@@ -42,8 +47,8 @@ This package contains the SecureDrop Release Signing Key and .repo file used to 
 %install
 install -m 755 -d %{buildroot}/etc/yum.repos.d
 install -m 755 -d %{buildroot}/etc/pki/rpm-gpg
-install -m 644 %{_projdir}/files/securedrop-workstation-dom0.repo %{buildroot}/etc/yum.repos.d/
-install -m 644 %{_projdir}/files/securedrop-release-signing-pubkey-2021.asc %{buildroot}/etc/pki/rpm-gpg/RPM-GPG-KEY-securedrop-workstation
+install -m 644 files/securedrop-workstation-dom0.repo %{buildroot}/etc/yum.repos.d/
+install -m 644 files/securedrop-release-signing-pubkey-2021.asc %{buildroot}/etc/pki/rpm-gpg/RPM-GPG-KEY-securedrop-workstation
 
 %files
 /etc/pki/rpm-gpg/RPM-GPG-KEY-securedrop-workstation
